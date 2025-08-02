@@ -1,3 +1,5 @@
+import uuid
+
 from django.db import models
 
 
@@ -11,6 +13,8 @@ class Node(models.Model):
         updated_at: Timestamp when the node was last updated
     """
 
+    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
+
     name = models.CharField(
         max_length=255, unique=True, help_text="The unique name of the node"
     )
@@ -19,7 +23,7 @@ class Node(models.Model):
 
     class Meta:
         db_table = "nodes"
-        ordering = ["name"]
+        ordering = ["-created_at"]
 
     def __str__(self):
         return self.name
@@ -38,6 +42,7 @@ class Connection(models.Model):
         created_at: Timestamp when the connection was created
     """
 
+    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     from_node = models.ForeignKey(
         Node,
         on_delete=models.CASCADE,
@@ -55,7 +60,7 @@ class Connection(models.Model):
     class Meta:
         db_table = "connections"
         unique_together = ("from_node", "to_node")
-        ordering = ["from_node__name", "to_node__name"]
+        ordering = ["-created_at"]
 
     def __str__(self):
         return f"{self.from_node.name} -> {self.to_node.name}"
