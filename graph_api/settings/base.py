@@ -124,6 +124,11 @@ AUTH_PASSWORD_VALIDATORS = [
 ]
 
 
+REST_FRAMEWORK = {
+    "EXCEPTION_HANDLER": "utils.exceptions.custom_exception_handler",
+}
+
+
 # Internationalization
 # https://docs.djangoproject.com/en/5.2/topics/i18n/
 
@@ -148,9 +153,19 @@ DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
 
 #  Celery Configuration
-CELERY_BROKER_URL = env("REDIS_URL")
-CELERY_RESULT_BACKEND = env("REDIS_URL")
+CELERY_RESULT_BACKEND = env.str("CELERY_RESULT_BACKEND", default="rpc://")
+CELERY_RESULT_PERSISTENT = False
 CELERY_ACCEPT_CONTENT = ["json"]
+CELERY_BROKER_URL = env.str("CELERY_BROKER_URL", default="amqp://guest@localhost//")
+
 CELERY_TASK_SERIALIZER = "json"
+
+CELERY_WORKER_HIJACK_ROOT_LOGGER = False
+CELERY_WORKER_REDIRECT_STDOUTS = True
+CELERY_TASK_ALWAYS_EAGER = env.bool("CELERY_TASK_ALWAYS_EAGER", default=False)
+
+CELERY_ACCEPT_CONTENT = ["json"]
 CELERY_RESULT_SERIALIZER = "json"
 CELERY_TIMEZONE = TIME_ZONE
+CELERY_TASK_TRACK_STARTED = True
+CELERY_TASK_TIME_LIMIT = 30 * 60  # 30 minutes
