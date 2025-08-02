@@ -19,7 +19,7 @@ class Node(models.Model):
 
     class Meta:
         db_table = "nodes"
-        ordering = ["name"]
+        ordering = ["-created_at"]
 
     def __str__(self):
         return self.name
@@ -55,7 +55,7 @@ class Connection(models.Model):
     class Meta:
         db_table = "connections"
         unique_together = ("from_node", "to_node")
-        ordering = ["from_node__name", "to_node__name"]
+        ordering = ["-created_at"]
 
     def __str__(self):
         return f"{self.from_node.name} -> {self.to_node.name}"
