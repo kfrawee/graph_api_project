@@ -10,7 +10,7 @@ from .models import Node
 from .services import GraphService
 
 
-@shared_task(bind=True, name='graph_api.slow_find_path')
+@shared_task(bind=True, name="graph_api.slow_find_path")
 def slow_find_path_task(
     self, from_node_name: str, to_node_name: str
 ) -> Optional[List[str]]:
@@ -31,9 +31,12 @@ def slow_find_path_task(
         Exception: If either node doesn't exist or other errors occur
     """
     try:
+        # Update the task state to processing
         self.update_state(
             state=TASK_STATUSES.PROCESSING.value,
-            meta={"message": "Starting path finding operation..."},
+            meta={
+                "message": f"Finding path from {from_node_name} to {to_node_name}..."
+            },
         )
 
         # Simulate a slow operation
@@ -43,14 +46,15 @@ def slow_find_path_task(
         try:
             from_node = Node.objects.get(name=from_node_name)
             to_node = Node.objects.get(name=to_node_name)
-        except ObjectDoesNotExist as e:
+        except (
+            ObjectDoesNotExist
+        ) as e:  # NOTE: Useless, as the serializer already validates this
             self.update_state(
                 state=TASK_STATUSES.FAILURE.value,
                 meta={"message": f"Node not found: {str(e)}"},
             )
             raise Exception(f"Node not found: {str(e)}")
 
-        # Find the path using the service
         path = GraphService.find_path(from_node, to_node)
 
         if path is None:
@@ -62,7 +66,6 @@ def slow_find_path_task(
             )
             return None
 
-        # Update task state
         self.update_state(
             state=TASK_STATUSES.SUCCESS.value,
             meta={

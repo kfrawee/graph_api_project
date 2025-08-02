@@ -67,7 +67,8 @@ def connect_nodes(request):
     if serializer.is_valid():
         connection = serializer.save()
         return Response(
-            {   "id": connection.id,
+            {
+                "id": connection.id,
                 "message": f"Successfully connected '{connection.from_node.name}' to '{connection.to_node.name}'",
                 "from_node": connection.from_node.name,
                 "to_node": connection.to_node.name,
@@ -111,7 +112,7 @@ def find_path(request):
                 "from_node": from_node.name,
                 "to_node": to_node.name,
                 "path_exists": path is not None,
-            }
+            },  # status=status.HTTP_200_OK if path is not None else status.HTTP_404_NOT_FOUND
         )
 
     return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
@@ -147,10 +148,10 @@ def slow_find_path(request):
         return Response(
             {
                 "task_id": task.id,
+                "status": task.state,
                 "message": "Path finding task started",
                 "from_node": from_node.name,
                 "to_node": to_node.name,
-                "status": task.state,
             },
             status=status.HTTP_202_ACCEPTED,
         )
@@ -172,55 +173,38 @@ def get_slow_path_result(request, task_id):
     Returns:
     - 200: Task result (either completed or pending)
     - 404: Task not found
+    - 500: Internal server error if something goes wrong
     """
     try:
-        # Get the task result
         task_result = AsyncResult(task_id)
 
-        if task_result.state == "PENDING":
-            response_data = {
-                "task_id": task_id,
-                "status": "PENDING",
-                "message": "Task is still processing...",
-            }
-        elif task_result.state == "PROCESSING":
-            response_data = {
-                "task_id": task_id,
-                "status": "PROCESSING",
-                "message": task_result.info.get(
-                    "message", "Task is being processed..."
-                ),
-            }
-        elif task_result.state == "SUCCESS":
-            result = task_result.result
-            response_data = {
-                "task_id": task_id,
-                "status": "SUCCESS",
-                "result": result.get("path") if isinstance(result, dict) else result,
-                "message": result.get("message", "Task completed successfully")
-                if isinstance(result, dict)
-                else "Task completed successfully",
-            }
-        elif task_result.state == "FAILURE":
-            response_data = {
-                "task_id": task_id,
-                "status": "FAILURE",
-                "error": str(task_result.info),
-                "message": "Task failed to complete",
-            }
-        else:
-            response_data = {
-                "task_id": task_id,
-                "status": task_result.state,
-                "message": f"Task is in {task_result.state} state",
-            }
+        # Somehow this is not working
+        if not task_result.info:
+            raise Http404(f"Task with ID {task_id} does not exist.")
 
-        return Response(response_data)
+        serializer = TaskResultSerializer(
+            {
+                "task_id": task_result.id,
+                "status": task_result.status,
+                "path": task_result.info.get("path") if task_result.info else None,
+                "message": task_result.info.get("message")
+                if task_result.info
+                else None,
+                "error": task_result.result if task_result.failed() else None,
+            }
+        )
+        response = TaskResultSerializer(serializer.data)
+        return Response(response.data)
+    except Http404:
+        return Response(
+            {"error": f"Task with ID {task_id} does not exist."},
+            status=status.HTTP_404_NOT_FOUND,
+        )
 
     except Exception as e:
         return Response(
-            {"error": f"Failed to retrieve task result: {str(e)}", "task_id": task_id},
-            status=status.HTTP_404_NOT_FOUND,
+            {"error": f"Something went wrong: {str(e)}", "task_id": task_id},
+            status=status.HTTP_500_INTERNAL_SERVER_ERROR,
         )
 
 

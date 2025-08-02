@@ -80,6 +80,7 @@ class ConnectNodesSerializer(serializers.Serializer):
         """Create and return a new Connection instance."""
         return Connection.objects.create(**validated_data)
 
+
 class FindPathSerializer(serializers.Serializer):
     """Serializer for finding a path between two nodes."""
 
@@ -113,20 +114,19 @@ class TaskResultSerializer(serializers.Serializer):
     """Serializer for task results."""
 
     task_id = serializers.CharField(help_text="The ID of the Celery task")
-    status = serializers.ChoiceField(
-        choices=TASK_STATUSES.choices(),
-        default=TASK_STATUSES.PENDING,
+    status = serializers.CharField(
+        default=TASK_STATUSES.PENDING.value,
         help_text="The status of the task (PENDING, SUCCESS, FAILURE, etc.)",
     )
-    created_at = serializers.DateTimeField(
-        help_text="Timestamp when the task was created"
-    )
-    updated_at = serializers.DateTimeField(
-        help_text="Timestamp when the task status was last updated"
+    path = serializers.ListField(
+        child=serializers.CharField(),
+        required=False,
+        allow_empty=True,
+        help_text="The path found by the task, if any",
     )
     error = serializers.CharField(
         required=False, allow_blank=True, help_text="Error message if the task failed"
     )
-    result = serializers.JSONField(
-        required=False, help_text="The result of the task (if completed)"
+    message = serializers.JSONField(
+        required=False, help_text="The result of the task (e.g., path found, etc."
     )
