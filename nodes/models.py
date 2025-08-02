@@ -1,3 +1,5 @@
+import uuid
+
 from django.db import models
 
 
@@ -10,6 +12,8 @@ class Node(models.Model):
         created_at: Timestamp when the node was created
         updated_at: Timestamp when the node was last updated
     """
+
+    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
 
     name = models.CharField(
         max_length=255, unique=True, help_text="The unique name of the node"
@@ -38,6 +42,7 @@ class Connection(models.Model):
         created_at: Timestamp when the connection was created
     """
 
+    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     from_node = models.ForeignKey(
         Node,
         on_delete=models.CASCADE,
