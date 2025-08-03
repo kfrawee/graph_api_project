@@ -79,8 +79,8 @@ jobs:
         SECRET_KEY: test-secret-key
         DJANGO_SETTINGS_MODULE: graph_api.settings.test
       run: |
-        python manage.py migrate --settings=graph_api.settings.test
-        pytest --cov=. --cov-report=xml --cov-report=term-missing
+        # python manage.py migrate --settings=graph_api.settings.test
+        pytest --cov=. --cov-report=xml --cov-report=term-missing -n auto
 
     - name: Upload coverage to Codecov
       uses: codecov/codecov-action@v3
