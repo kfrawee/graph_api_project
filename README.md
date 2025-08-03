@@ -8,7 +8,7 @@ A Django REST API for graph operations with asynchronous path-finding using Cele
 
 - **CreateNode API**: Create nodes in the graph
 - **ConnectNodes API**: Create directed connections between nodes
-- **FindPath API**: Find shortest path between two nodes using BFS
+- **FindPath API**: Find the shortest path between two nodes using BFS
 - **SlowFindPath API**: Asynchronous path-finding with Celery
 - **GetSlowPathResult API**: Retrieve results of asynchronous tasks
 
@@ -63,7 +63,7 @@ cp .env.example .env
 docker compose -f docker/docker-compose.dev.yml up --build
 
 # Production environment
-docker compose -f docker/docker-compose.prodyml up --build
+docker compose -f docker/docker-compose.prod.yml up --build
 ```
 
 6. **Or run locally**
@@ -83,7 +83,7 @@ celery -A graph_api worker --loglevel=info
 
 ## API Endpoints
 
-> You can find POSTMAN collection at: `/docs/Graph Node API.postman_collection.json`
+> You can find the POSTMAN collection at: `/docs/Graph Node API.postman_collection.json`
 
 ### Base URL
 ```
@@ -159,7 +159,7 @@ GET /api/path/result/{task_id}/
 
 ### FindPath API
 - **Endpoint**: `POST /api/path/find/`
-- **Purpose**: Finds shortest path between two nodes using BFS algorithm
+- **Purpose**: Find the shortest path between two nodes using the BFS algorithm
 - **Request Body**: `{"from_node": "string", "to_node": "string"}`
 - **Response**: `{"path": ["NodeA", "NodeB", "NodeC"] | null, "path_exists": boolean}`
 - **Status Codes**:
