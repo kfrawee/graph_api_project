@@ -125,7 +125,6 @@ class NodesAPITest(APITestCase):
         self.assertEqual(response.data["count"], 2)
         self.assertEqual(len(response.data["nodes"]), 2)
 
-
     @patch("nodes.views.slow_find_path_task.delay")
     def test_slow_find_path_success(self, mock_delay):
         """Test async task initiation for finding path."""
