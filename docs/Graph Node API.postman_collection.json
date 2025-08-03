@@ -1,0 +1,866 @@
+{
+	"info": {
+		"_postman_id": "5c3f2135-5f2a-4db2-a44c-d0e2bbfb1f8a",
+		"name": "Graph Node API",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "18820922"
+	},
+	"item": [
+		{
+			"name": "Nodes",
+			"item": [
+				{
+					"name": "Create Node",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"name\": \"d\"\n}"
+						},
+						"url": {
+							"raw": "{{BASE_URL}}/nodes/create/",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"path": [
+								"nodes",
+								"create",
+								""
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Create Node",
+							"originalRequest": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"name\": \"e\"\n}"
+								},
+								"url": {
+									"raw": "{{BASE_URL}}/nodes/create/",
+									"host": [
+										"{{BASE_URL}}"
+									],
+									"path": [
+										"nodes",
+										"create",
+										""
+									]
+								}
+							},
+							"status": "Created",
+							"code": 201,
+							"_postman_previewlanguage": null,
+							"header": [
+								{
+									"key": "Date",
+									"value": "Sat, 02 Aug 2025 21:12:31 GMT"
+								},
+								{
+									"key": "Server",
+									"value": "WSGIServer/0.2 CPython/3.12.3"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Vary",
+									"value": "Accept, Cookie"
+								},
+								{
+									"key": "Allow",
+									"value": "OPTIONS, POST"
+								},
+								{
+									"key": "X-Frame-Options",
+									"value": "DENY"
+								},
+								{
+									"key": "Content-Length",
+									"value": "142"
+								},
+								{
+									"key": "X-Content-Type-Options",
+									"value": "nosniff"
+								},
+								{
+									"key": "Referrer-Policy",
+									"value": "same-origin"
+								},
+								{
+									"key": "Cross-Origin-Opener-Policy",
+									"value": "same-origin"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"id\": \"59002f54-6746-42c3-9231-d0baeb17297f\",\n    \"name\": \"e\",\n    \"created_at\": \"2025-08-02T21:12:31.719967Z\",\n    \"updated_at\": \"2025-08-02T21:12:31.720128Z\"\n}"
+						},
+						{
+							"name": "Create Node",
+							"originalRequest": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"name\": \"a\"\n}"
+								},
+								"url": {
+									"raw": "{{BASE_URL}}/nodes/create/",
+									"host": [
+										"{{BASE_URL}}"
+									],
+									"path": [
+										"nodes",
+										"create",
+										""
+									]
+								}
+							},
+							"status": "Bad Request",
+							"code": 400,
+							"_postman_previewlanguage": null,
+							"header": [
+								{
+									"key": "Date",
+									"value": "Sat, 02 Aug 2025 21:12:20 GMT"
+								},
+								{
+									"key": "Server",
+									"value": "WSGIServer/0.2 CPython/3.12.3"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Vary",
+									"value": "Accept, Cookie"
+								},
+								{
+									"key": "Allow",
+									"value": "OPTIONS, POST"
+								},
+								{
+									"key": "X-Frame-Options",
+									"value": "DENY"
+								},
+								{
+									"key": "Content-Length",
+									"value": "47"
+								},
+								{
+									"key": "X-Content-Type-Options",
+									"value": "nosniff"
+								},
+								{
+									"key": "Referrer-Policy",
+									"value": "same-origin"
+								},
+								{
+									"key": "Cross-Origin-Opener-Policy",
+									"value": "same-origin"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"name\": [\n        \"Node with name 'a' already exists.\"\n    ]\n}"
+						}
+					]
+				},
+				{
+					"name": "List Nodes",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{BASE_URL}}/nodes",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"path": [
+								"nodes"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "List Nodes",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{BASE_URL}}/nodes",
+									"host": [
+										"{{BASE_URL}}"
+									],
+									"path": [
+										"nodes"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": null,
+							"header": [
+								{
+									"key": "Date",
+									"value": "Sat, 02 Aug 2025 21:03:17 GMT"
+								},
+								{
+									"key": "Server",
+									"value": "WSGIServer/0.2 CPython/3.12.3"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Vary",
+									"value": "Accept, Cookie"
+								},
+								{
+									"key": "Allow",
+									"value": "GET, OPTIONS"
+								},
+								{
+									"key": "X-Frame-Options",
+									"value": "DENY"
+								},
+								{
+									"key": "Content-Length",
+									"value": "450"
+								},
+								{
+									"key": "X-Content-Type-Options",
+									"value": "nosniff"
+								},
+								{
+									"key": "Referrer-Policy",
+									"value": "same-origin"
+								},
+								{
+									"key": "Cross-Origin-Opener-Policy",
+									"value": "same-origin"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"nodes\": [\n        {\n            \"id\": \"84bc0e79-f151-41f7-8ff7-5f9aa94cc26c\",\n            \"name\": \"c\",\n            \"created_at\": \"2025-08-02T20:15:00.066978Z\",\n            \"updated_at\": \"2025-08-02T20:15:00.067432Z\"\n        },\n        {\n            \"id\": \"1efd0370-abeb-4137-9908-c993aafc7566\",\n            \"name\": \"b\",\n            \"created_at\": \"2025-08-02T19:41:25.483491Z\",\n            \"updated_at\": \"2025-08-02T19:41:25.483533Z\"\n        },\n        {\n            \"id\": \"c9ce6a44-d335-47eb-83d4-333f91014413\",\n            \"name\": \"a\",\n            \"created_at\": \"2025-08-02T19:38:00.692679Z\",\n            \"updated_at\": \"2025-08-02T19:38:00.693132Z\"\n        }\n    ],\n    \"count\": 3\n}"
+						}
+					]
+				},
+				{
+					"name": "Connect Nodes",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"from_node\": \"c\",\n  \"to_node\": \"d\"\n}"
+						},
+						"url": {
+							"raw": "{{BASE_URL}}/nodes/connect/",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"path": [
+								"nodes",
+								"connect",
+								""
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Connect Nodes",
+							"originalRequest": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"from_node\": \"c\",\n  \"to_node\": \"d\"\n}"
+								},
+								"url": {
+									"raw": "{{BASE_URL}}/nodes/connect/",
+									"host": [
+										"{{BASE_URL}}"
+									],
+									"path": [
+										"nodes",
+										"connect",
+										""
+									]
+								}
+							},
+							"status": "Created",
+							"code": 201,
+							"_postman_previewlanguage": null,
+							"header": [
+								{
+									"key": "Date",
+									"value": "Sat, 02 Aug 2025 21:14:20 GMT"
+								},
+								{
+									"key": "Server",
+									"value": "WSGIServer/0.2 CPython/3.12.3"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Vary",
+									"value": "Accept, Cookie"
+								},
+								{
+									"key": "Allow",
+									"value": "OPTIONS, POST"
+								},
+								{
+									"key": "X-Frame-Options",
+									"value": "DENY"
+								},
+								{
+									"key": "Content-Length",
+									"value": "164"
+								},
+								{
+									"key": "X-Content-Type-Options",
+									"value": "nosniff"
+								},
+								{
+									"key": "Referrer-Policy",
+									"value": "same-origin"
+								},
+								{
+									"key": "Cross-Origin-Opener-Policy",
+									"value": "same-origin"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"id\": \"64e8573a-5058-4b43-afa4-32e9e7942235\",\n    \"message\": \"Successfully connected 'c' to 'd'\",\n    \"from_node\": \"c\",\n    \"to_node\": \"d\",\n    \"created_at\": \"2025-08-02T21:14:20.076491Z\"\n}"
+						},
+						{
+							"name": "Connect Nodes",
+							"originalRequest": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"from_node\": \"c\",\n  \"to_node\": \"d\"\n}"
+								},
+								"url": {
+									"raw": "{{BASE_URL}}/nodes/connect/",
+									"host": [
+										"{{BASE_URL}}"
+									],
+									"path": [
+										"nodes",
+										"connect",
+										""
+									]
+								}
+							},
+							"status": "Bad Request",
+							"code": 400,
+							"_postman_previewlanguage": "",
+							"header": [
+								{
+									"key": "Date",
+									"value": "Sat, 02 Aug 2025 21:13:23 GMT"
+								},
+								{
+									"key": "Server",
+									"value": "WSGIServer/0.2 CPython/3.12.3"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Vary",
+									"value": "Accept, Cookie"
+								},
+								{
+									"key": "Allow",
+									"value": "OPTIONS, POST"
+								},
+								{
+									"key": "X-Frame-Options",
+									"value": "DENY"
+								},
+								{
+									"key": "Content-Length",
+									"value": "67"
+								},
+								{
+									"key": "X-Content-Type-Options",
+									"value": "nosniff"
+								},
+								{
+									"key": "Referrer-Policy",
+									"value": "same-origin"
+								},
+								{
+									"key": "Cross-Origin-Opener-Policy",
+									"value": "same-origin"
+								}
+							],
+							"cookie": [
+								{
+									"expires": "Invalid Date"
+								}
+							],
+							"body": "{\n    \"non_field_errors\": [\n        \"Connection from 'a' to 'b' already exists.\"\n    ]\n}"
+						}
+					]
+				}
+			]
+		},
+		{
+			"name": "Path",
+			"item": [
+				{
+					"name": "Result",
+					"item": [
+						{
+							"name": "Get Slow Path Result",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{BASE_URL}}/path/result/{{task_id}}/",
+									"host": [
+										"{{BASE_URL}}"
+									],
+									"path": [
+										"path",
+										"result",
+										"{{task_id}}",
+										""
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Find Path",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"from_node\": \"a\",\n  \"to_node\": \"b\"\n}"
+						},
+						"url": {
+							"raw": "{{BASE_URL}}/path/find/",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"path": [
+								"path",
+								"find",
+								""
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Find Path",
+							"originalRequest": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"from_node\": \"a\",\n  \"to_node\": \"b\"\n}"
+								},
+								"url": {
+									"raw": "{{BASE_URL}}/path/find/",
+									"host": [
+										"{{BASE_URL}}"
+									],
+									"path": [
+										"path",
+										"find",
+										""
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": null,
+							"header": [
+								{
+									"key": "Date",
+									"value": "Sat, 02 Aug 2025 21:16:19 GMT"
+								},
+								{
+									"key": "Server",
+									"value": "WSGIServer/0.2 CPython/3.12.3"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Vary",
+									"value": "Accept, Cookie"
+								},
+								{
+									"key": "Allow",
+									"value": "OPTIONS, POST"
+								},
+								{
+									"key": "X-Frame-Options",
+									"value": "DENY"
+								},
+								{
+									"key": "Content-Length",
+									"value": "67"
+								},
+								{
+									"key": "X-Content-Type-Options",
+									"value": "nosniff"
+								},
+								{
+									"key": "Referrer-Policy",
+									"value": "same-origin"
+								},
+								{
+									"key": "Cross-Origin-Opener-Policy",
+									"value": "same-origin"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"path\": [\n        \"a\",\n        \"b\"\n    ],\n    \"from_node\": \"a\",\n    \"to_node\": \"b\",\n    \"path_exists\": true\n}"
+						},
+						{
+							"name": "Find Path",
+							"originalRequest": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"from_node\": \"a\",\n  \"to_node\": \"e\"\n}"
+								},
+								"url": {
+									"raw": "{{BASE_URL}}/path/find/",
+									"host": [
+										"{{BASE_URL}}"
+									],
+									"path": [
+										"path",
+										"find",
+										""
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": null,
+							"header": [
+								{
+									"key": "Date",
+									"value": "Sat, 02 Aug 2025 21:16:29 GMT"
+								},
+								{
+									"key": "Server",
+									"value": "WSGIServer/0.2 CPython/3.12.3"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Vary",
+									"value": "Accept, Cookie"
+								},
+								{
+									"key": "Allow",
+									"value": "OPTIONS, POST"
+								},
+								{
+									"key": "X-Frame-Options",
+									"value": "DENY"
+								},
+								{
+									"key": "Content-Length",
+									"value": "63"
+								},
+								{
+									"key": "X-Content-Type-Options",
+									"value": "nosniff"
+								},
+								{
+									"key": "Referrer-Policy",
+									"value": "same-origin"
+								},
+								{
+									"key": "Cross-Origin-Opener-Policy",
+									"value": "same-origin"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"path\": null,\n    \"from_node\": \"a\",\n    \"to_node\": \"e\",\n    \"path_exists\": false\n}"
+						},
+						{
+							"name": "Find Path",
+							"originalRequest": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"from_node\": \"x\",\n  \"to_node\": \"e\"\n}"
+								},
+								"url": {
+									"raw": "{{BASE_URL}}/path/find/",
+									"host": [
+										"{{BASE_URL}}"
+									],
+									"path": [
+										"path",
+										"find",
+										""
+									]
+								}
+							},
+							"status": "Bad Request",
+							"code": 400,
+							"_postman_previewlanguage": null,
+							"header": [
+								{
+									"key": "Date",
+									"value": "Sat, 02 Aug 2025 21:16:44 GMT"
+								},
+								{
+									"key": "Server",
+									"value": "WSGIServer/0.2 CPython/3.12.3"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Vary",
+									"value": "Accept, Cookie"
+								},
+								{
+									"key": "Allow",
+									"value": "OPTIONS, POST"
+								},
+								{
+									"key": "X-Frame-Options",
+									"value": "DENY"
+								},
+								{
+									"key": "Content-Length",
+									"value": "52"
+								},
+								{
+									"key": "X-Content-Type-Options",
+									"value": "nosniff"
+								},
+								{
+									"key": "Referrer-Policy",
+									"value": "same-origin"
+								},
+								{
+									"key": "Cross-Origin-Opener-Policy",
+									"value": "same-origin"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"from_node\": [\n        \"Node with name 'x' does not exist.\"\n    ]\n}"
+						}
+					]
+				},
+				{
+					"name": "Slow Find Path",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"let jsonData = pm.response.json();",
+									"if (jsonData.task_id) {",
+									"    pm.collectionVariables.set(\"task_id\", jsonData.task_id);",
+									"};",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"from_node\": \"a\",\n    \"to_node\": \"e\"\n}"
+						},
+						"url": {
+							"raw": "{{BASE_URL}}/path/slow-find/",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"path": [
+								"path",
+								"slow-find",
+								""
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Health Check",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{BASE_URL}}/health",
+					"host": [
+						"{{BASE_URL}}"
+					],
+					"path": [
+						"health"
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "Health Check",
+					"originalRequest": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{BASE_URL}}/health",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"path": [
+								"health"
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": null,
+					"header": [
+						{
+							"key": "Date",
+							"value": "Sat, 02 Aug 2025 21:02:51 GMT"
+						},
+						{
+							"key": "Server",
+							"value": "WSGIServer/0.2 CPython/3.12.3"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json"
+						},
+						{
+							"key": "Vary",
+							"value": "Accept, Cookie"
+						},
+						{
+							"key": "Allow",
+							"value": "GET, OPTIONS"
+						},
+						{
+							"key": "X-Frame-Options",
+							"value": "DENY"
+						},
+						{
+							"key": "Content-Length",
+							"value": "96"
+						},
+						{
+							"key": "X-Content-Type-Options",
+							"value": "nosniff"
+						},
+						{
+							"key": "Referrer-Policy",
+							"value": "same-origin"
+						},
+						{
+							"key": "Cross-Origin-Opener-Policy",
+							"value": "same-origin"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"status\": \"ok\",\n    \"timestamp\": \"2025-08-02T21:02:51.677065\",\n    \"message\": \"API is healthy and running.\"\n}"
+				}
+			]
+		}
+	],
+	"variable": [
+		{
+			"key": "task_id",
+			"value": ""
+		}
+	]
+}

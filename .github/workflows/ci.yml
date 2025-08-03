@@ -100,7 +100,7 @@ jobs:
 
     - name: Build Docker image
       run: |
-        docker build -f docker/Dockerfile -t graph-api:latest .
+        docker build -f docker/Dockerfile.prod -t graph-api:latest .
 
     - name: Test Docker image
       run: |
