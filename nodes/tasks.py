@@ -2,6 +2,7 @@ import time
 from typing import List, Optional
 
 from celery import shared_task
+from celery.exceptions import Ignore
 from django.core.exceptions import ObjectDoesNotExist
 
 
@@ -31,66 +32,61 @@ def slow_find_path_task(
         Exception: If either node doesn't exist or other errors occur
     """
     try:
-        # Update the task state to processing
         self.update_state(
-            state=TASK_STATUSES.PROCESSING.value,
             meta={
-                "message": f"Finding path from {from_node_name} to {to_node_name}..."
+                "message": f"Processing path finding from {from_node_name} to {to_node_name}."
             },
         )
 
         # Simulate a slow operation
         time.sleep(5)
 
-        # Get the nodes
         try:
             from_node = Node.objects.get(name=from_node_name)
             to_node = Node.objects.get(name=to_node_name)
-        except (
-            ObjectDoesNotExist
-        ) as e:  # NOTE: Useless, as the serializer already validates this
-            self.update_state(
-                state=TASK_STATUSES.FAILURE.value,
-                meta={"message": f"Node not found: {str(e)}"},
+        except ObjectDoesNotExist as e:
+            _dict = dict(
+                status=TASK_STATUSES.FAILURE.value,
+                path=None,
+                message="Node not found.",
+                error=str(e),
             )
-            raise Exception(f"Node not found: {str(e)}")
+            self.update_state(
+                meta=_dict,
+            )
+            return _dict
 
         path = GraphService.find_path(from_node, to_node)
 
         if path is None:
-            self.update_state(
-                state=TASK_STATUSES.FAILURE.value,
-                meta={
-                    "message": f"No path found from {from_node_name} to {to_node_name}"
-                },
+            _dict = dict(
+                status=TASK_STATUSES.FAILURE.value,
+                path=None,
+                message=f"No path found from {from_node_name} to {to_node_name}",
             )
-            return None
+            self.update_state(
+                meta=_dict,
+            )
+            return _dict
 
-        self.update_state(
-            state=TASK_STATUSES.SUCCESS.value,
-            meta={
-                "path": path,
-                "message": f"Path found from {from_node_name} to {to_node_name}",
-            },
+        _dict = dict(
+            status=TASK_STATUSES.SUCCESS.value,
+            path=path,
+            message=f"Path found from {from_node_name} to {to_node_name}",
         )
+        self.update_state(
+            meta=_dict,
+        )
+        return _dict
 
-        return {
-            "path": path,
-            "message": f"Path finding completed from {from_node_name} to {to_node_name}",
-        }
-
-    except Exception as exc:
-        if self.request.retries < 3:
-            self.update_state(
-                state=TASK_STATUSES.RETRY.value,
-                meta={"message": "Retrying due to an error...", "error": str(exc)},
-            )
-            self.retry(exc=exc, countdown=10, max_retries=3)
-        else:
-            self.update_state(
-                state=TASK_STATUSES.FAILURE.value,
-                meta={
-                    "message": "Max retries reached. Task failed.",
-                    "error": str(exc),
-                },
-            )
+    except Exception as e:
+        _dict = dict(
+            status=TASK_STATUSES.FAILURE.value,
+            path=None,
+            message=f"An error occurred.",
+            error=str(e),
+        )
+        self.update_state(
+            meta=_dict,
+        )
+        raise Ignore() from e
