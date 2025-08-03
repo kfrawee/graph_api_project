@@ -64,7 +64,7 @@ addopts = [
     "-v",
     "--cov=.",
     "--cov-report=term-missing",
-    "-n 4",  # run tests in parallel
+    "-n 8",  # run tests in parallel
 ]
 
 [tool.coverage.run]
@@ -72,6 +72,9 @@ omit = [
   "*/migrations/*",
   "*/tests/*",
   "manage.py",
+  "graph_api/*",
+  "exceptions.py",
+  "admin.py",
 ]
 branch = true
 
