@@ -177,33 +177,44 @@ def get_slow_path_result(request, task_id):
     """
     try:
         task_result = AsyncResult(task_id)
+        task_meta = task_result.backend.get_task_meta(task_id)
+
+        if task_meta["status"] == "PENDING" and task_meta.get("result") is None:
+            return Response(
+                {"error": "Task not found"},
+                status=status.HTTP_404_NOT_FOUND,
+            )
 
         # Somehow this is not working
-        if not task_result.info:
-            raise Http404(f"Task with ID {task_id} does not exist.")
+        if task_result.ready():
+            _dict = task_result.info or {}
 
-        serializer = TaskResultSerializer(
-            {
-                "task_id": task_result.id,
-                "status": task_result.status,
-                "path": task_result.info.get("path") if task_result.info else None,
-                "message": task_result.info.get("message")
-                if task_result.info
-                else None,
-                "error": task_result.result if task_result.failed() else None,
-            }
-        )
-        response = TaskResultSerializer(serializer.data)
-        return Response(response.data)
-    except Http404:
-        return Response(
-            {"error": f"Task with ID {task_id} does not exist."},
-            status=status.HTTP_404_NOT_FOUND,
-        )
+            response = TaskResultSerializer(
+                {
+                    "task_id": task_result.id,
+                    "status": _dict.get("status"),
+                    "path": _dict.get("path"),
+                    "message": _dict.get("message"),
+                    "error": _dict.get("error"),
+                }
+            )
+            return Response(response.data)
+        else:  # Task is still processing
+            response = TaskResultSerializer(
+                {
+                    "task_id": task_result.id,
+                    "status": "PENDING",
+                    "message": "Task is still processing",
+                    "path": None,
+                    "error": None,
+                }
+            )
+
+            return Response(response.data)
 
     except Exception as e:
         return Response(
-            {"error": f"Something went wrong: {str(e)}", "task_id": task_id},
+            {"error": str(e)},
             status=status.HTTP_500_INTERNAL_SERVER_ERROR,
         )
 
@@ -240,6 +251,5 @@ def health_check(request):
         {
             "status": "ok",
             "timestamp": datetime.now().isoformat(),
-            "message": "API is healthy and running.",
         }
     )
