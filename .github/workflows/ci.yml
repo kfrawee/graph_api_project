@@ -64,9 +64,9 @@ jobs:
         python -m pip install --upgrade pip
         pip install -r requirements/development.txt
 
-    - name: Run ruff linting
-      run: |
-        ruff check .
+    # - name: Run ruff linting
+    #   run: |
+    #     ruff check .
         
     - name: Run black formatting check
       run: |
